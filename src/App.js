@@ -1,5 +1,7 @@
+import LoginForm from "./LoginForm";
+
 function App() {
-  return 'App!!!';
+  return <LoginForm />
 }
 
 export default App;
