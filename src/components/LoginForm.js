@@ -1,6 +1,30 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { changeUser, changeEmailOrId, changePassword } from '../store';
+
 function LoginForm() {
 
-  
+  const dispatch = useDispatch();
+
+  const { emailOrId, password } = useSelector((state) => {
+    return {
+      emailOrId: state.login.emailOrId,
+      password: state.login.password,
+    };
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    dispatch(changeUser({ emailOrId, password }));
+  };
+
+  const handleEmailOrIdChange = (event) => {
+    dispatch(changeEmailOrId(event.target.value));
+  };
+
+  const handlePasswordChange = (event) => {
+    dispatch(changePassword(event.target.value));
+  };
 
   return <div>
     <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
@@ -19,7 +43,7 @@ function LoginForm() {
                 </div>
                 <div className="col-md-6 col-lg-7 d-flex align-items-center">
                   <div className="card-body p-4 p-lg-5 text-black">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="d-flex align-items-center mb-3 pb-1">
                         <i
                           className="fas fa-cubes fa-2x me-3"
@@ -38,6 +62,8 @@ function LoginForm() {
                           type="email"
                           id="form2Example17"
                           className="form-control form-control-lg"
+                          value={emailOrId}
+                          onChange={handleEmailOrIdChange}
                         />
                         <label className="form-label" htmlFor="form2Example17">
                           Email address
@@ -48,6 +74,8 @@ function LoginForm() {
                           type="password"
                           id="form2Example27"
                           className="form-control form-control-lg"
+                          value={password}
+                          onChange={handlePasswordChange}
                         />
                         <label className="form-label" htmlFor="form2Example27">
                           Password
@@ -57,6 +85,7 @@ function LoginForm() {
                         <button
                           className="btn btn-dark btn-lg btn-block"
                           type="button"
+                          onClick={handleSubmit}
                         >
                           Login
                         </button>
